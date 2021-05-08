@@ -16,13 +16,22 @@ namespace ListaClientes.Services
             _user = database.GetCollection<User>(settings.CollectionName);
         }
 
-        public List<User> Get()
+        public List<User> Get(FilterUser filterUser)
         {
-            return _user.Find(user => true).ToList();
+            if (string.IsNullOrEmpty(filterUser.Name) && filterUser.Limit == 0 && filterUser.Offset == 0)
+            {
+                return _user.Find(user => true).SortBy(user => user.Name).ToList();
+            }
+            if (string.IsNullOrEmpty(filterUser.Name) && filterUser.Limit > 0 && filterUser.Offset > 0)
+            {
+                return _user.Find(user => true).SortBy(user => user.Name).Skip(filterUser.Offset).Limit(filterUser.Limit).ToList();
+            }
+            return _user.Find(user => user.Name.Contains(filterUser.Name)).SortBy(user => user.Name).Skip(filterUser.Offset).Limit(filterUser.Limit).ToList();
         }
-        public User Get(string name)
+
+        public User Get(string id)
         {
-            return _user.Find<User>(user => user.Name == name).FirstOrDefault();
+            return _user.Find<User>(user => user.Id == id).FirstOrDefault();
         }
 
         public User Create(User user)
@@ -35,10 +44,6 @@ namespace ListaClientes.Services
             return _user.ReplaceOne(user => user.Id == id, userIn).ModifiedCount;
         }
 
-        public void Remove(User userIn)
-        {
-            _user.DeleteOne(user => user.Id == userIn.Id);
-        }
         public long Remove(string id)
         {
             var user = _user.DeleteOne(user => user.Id == id);

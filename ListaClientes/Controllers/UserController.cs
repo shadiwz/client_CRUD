@@ -27,16 +27,16 @@ namespace ListaClientes.Controllers
         }
 
         [HttpGet]
-        public List<User> Get()
+        public List<User> Get([FromQuery] FilterUser filterUser)
         {
-            return _userServices.Get();
+            return _userServices.Get(filterUser);
         }
 
         [HttpGet]
-        [Route("{userName}")]
-        public User UserGetByName(string userName)
+        [Route("{userId}")]
+        public User UserGetById(string userId)
         {
-            return _userServices.Get(userName);
+            return _userServices.Get(userId);
         }
 
         [HttpDelete]

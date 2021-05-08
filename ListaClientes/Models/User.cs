@@ -13,11 +13,11 @@ namespace ListaClientes
 
         public string Name { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime BirthDate { get; set; }
 
-        public Dictionary<string, string> Number { get; set; }
-
-        public Dictionary <string, string> Adress { get; set; }
+        public List<PhoneDescription> PhoneNumber { get; set; }
+        
+        public List<AddressDescription> Adress { get; set; }
 
         public List <string> Social { get; set; }
 
@@ -25,4 +25,23 @@ namespace ListaClientes
 
         public string RG { get; set; }
     }
-}
+    public class PhoneDescription
+    {
+        public string NickName { get; set; }
+        public string Phone { get; set; }
+    }
+
+    public class AddressDescription
+    {
+        public string Description { get; set; }
+        public string Address { get; set; }
+    }
+
+    public class FilterUser 
+    { 
+        public string Name { get; set; }
+        public int Limit { get; set; }
+        public int Offset { get; set; }
+    }
+
+    }
