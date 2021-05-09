@@ -22,7 +22,7 @@ namespace ListaClientes.Services
             {
                 return _user.Find(user => true).SortBy(user => user.Name).ToList();
             }
-            if (string.IsNullOrEmpty(filterUser.Name) && filterUser.Limit > 0 && filterUser.Offset > 0)
+            if (string.IsNullOrEmpty(filterUser.Name) && filterUser.Limit > 0 )
             {
                 return _user.Find(user => true).SortBy(user => user.Name).Skip(filterUser.Offset).Limit(filterUser.Limit).ToList();
             }
